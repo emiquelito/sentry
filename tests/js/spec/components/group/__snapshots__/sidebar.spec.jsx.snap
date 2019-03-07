@@ -214,7 +214,7 @@ exports[`GroupSidebar renders with tags renders 1`] = `
       }
     }
   />
-  <ExternalIssueList
+  <withApi(ExternalIssueList)
     group={
       Object {
         "assignedTo": null,
