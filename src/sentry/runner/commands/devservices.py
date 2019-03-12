@@ -114,7 +114,10 @@ def up(project, exclude):
         else:
             container.stop()
             container.remove()
-        click.secho("> Creating '%s' container" % options['name'], err=True, fg='yellow')
+        listening = ''
+        if options['ports']:
+            listening = ' (listening: %s)' % ', '.join(map(str, options['ports'].values()))
+        click.secho("> Creating '%s' container%s" % (options['name'], listening), err=True, fg='yellow')
         client.containers.run(**options)
 
 
