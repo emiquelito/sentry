@@ -10,7 +10,6 @@ import {getOrganizationState} from 'app/mixins/organizationState';
 import {openCreateTeamModal} from 'app/actionCreators/modal';
 import {removeTeamFromProject, addTeamToProject} from 'app/actionCreators/projects';
 import {t, tct} from 'app/locale';
-import ApiMixin from 'app/mixins/apiMixin';
 import AsyncView from 'app/views/asyncView';
 import Button from 'app/components/button';
 import Confirm from 'app/components/confirm';
@@ -26,6 +25,7 @@ const TeamRow = createReactClass({
   displayName: 'TeamRow',
 
   propTypes: {
+    api: PropTypes.object,
     orgId: PropTypes.string.isRequired,
     projectId: PropTypes.string.isRequired,
     team: PropTypes.object.isRequired,
@@ -33,8 +33,6 @@ const TeamRow = createReactClass({
     onRemove: PropTypes.func.isRequired,
     teamCount: PropTypes.number.isRequired,
   },
-
-  mixins: [ApiMixin],
 
   getInitialState() {
     return {
@@ -48,7 +46,7 @@ const TeamRow = createReactClass({
 
     const {orgId, projectId, team} = this.props;
 
-    removeTeamFromProject(this.api, orgId, projectId, team.slug)
+    removeTeamFromProject(this.props.api, orgId, projectId, team.slug)
       .then(() => this.props.onRemove())
       .catch(() => {
         this.setState({
@@ -235,6 +233,7 @@ class ProjectTeams extends AsyncView {
     return this.state.projectTeams.map(team => {
       return (
         <TeamRow
+          api={this.api}
           access={access}
           key={team.id}
           orgId={orgId}

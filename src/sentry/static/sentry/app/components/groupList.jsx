@@ -6,7 +6,7 @@ import {isEqual} from 'lodash';
 import qs from 'query-string';
 
 import SentryTypes from 'app/sentryTypes';
-import ApiMixin from 'app/mixins/apiMixin';
+import withApi from 'app/utils/withApi';
 import {fetchOrgMembers, indexMembersByProject} from 'app/actionCreators/members';
 import GroupListHeader from 'app/components/groupListHeader';
 import GroupStore from 'app/stores/groupStore';
@@ -22,11 +22,14 @@ const GroupList = createReactClass({
   displayName: 'GroupList',
 
   propTypes: {
+    api: PropTypes.object,
     query: PropTypes.string.isRequired,
     canSelectGroups: PropTypes.bool,
     orgId: PropTypes.string.isRequired,
+
     // Provided in the project version, not in org version
     projectId: PropTypes.string,
+
     environment: SentryTypes.Environment,
   },
 
@@ -34,7 +37,7 @@ const GroupList = createReactClass({
     location: PropTypes.object,
   },
 
-  mixins: [Reflux.listenTo(GroupStore, 'onGroupChange'), ApiMixin],
+  mixins: [Reflux.listenTo(GroupStore, 'onGroupChange')],
 
   getDefaultProps() {
     return {
@@ -81,11 +84,11 @@ const GroupList = createReactClass({
       error: false,
     });
 
-    fetchOrgMembers(this.api, this.props.orgId).then(members => {
+    fetchOrgMembers(this.props.api, this.props.orgId).then(members => {
       this.setState({memberList: indexMembersByProject(members)});
     });
 
-    this.api.request(this.getGroupListEndpoint(), {
+    this.props.api.request(this.getGroupListEndpoint(), {
       success: (data, _, jqXHR) => {
         this._streamManager.push(data);
 
@@ -187,4 +190,6 @@ const GroupList = createReactClass({
   },
 });
 
-export default GroupList;
+export {GroupList};
+
+export default withApi(GroupList);

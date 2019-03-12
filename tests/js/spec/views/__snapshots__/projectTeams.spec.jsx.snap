@@ -89,6 +89,7 @@ exports[`ProjectTeams renders 1`] = `
               "team:admin",
             }
           }
+          api={Client {}}
           key="1"
           onRemove={[Function]}
           orgId="org-slug"

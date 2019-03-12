@@ -16,6 +16,7 @@ describe('ProjectReleases', function() {
     sandbox.stub(Client.prototype, 'request');
 
     props = {
+      api: new MockApiClient(),
       setProjectNavSection: function() {},
       params: {orgId: '123', projectId: '456'},
       location: {query: {per_page: 0, query: 'derp'}},
@@ -86,6 +87,7 @@ describe('ProjectReleases', function() {
       const routerContext = TestStubs.routerContext([{organization: org, project}]);
 
       props = {
+        api: new MockApiClient(),
         setProjectNavSection: function() {},
         params: {orgId: '123', projectId: '456'},
         location: {query: {per_page: 0, query: ''}},
@@ -113,6 +115,7 @@ describe('ProjectReleases', function() {
       const routerContext = TestStubs.routerContext([{organization: org, project}]);
 
       props = {
+        api: new MockApiClient(),
         setProjectNavSection: function() {},
         params: {orgId: '123', projectId: '456'},
         location: {query: {per_page: 0, query: ''}},

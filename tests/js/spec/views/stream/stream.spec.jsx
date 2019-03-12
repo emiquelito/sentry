@@ -7,7 +7,7 @@ import {Client} from 'app/api';
 import CursorPoller from 'app/utils/cursorPoller';
 import LoadingError from 'app/components/loadingError';
 import ErrorRobot from 'app/components/errorRobot';
-import Stream from 'app/views/stream/stream';
+import {Stream} from 'app/views/stream/stream';
 import EnvironmentStore from 'app/stores/environmentStore';
 import {setActiveEnvironment} from 'app/actionCreators/environments';
 import {browserHistory} from 'react-router';
@@ -76,6 +76,7 @@ describe('Stream', function() {
     TagStore.init();
 
     props = {
+      api: new MockApiClient(),
       setProjectNavSection: function() {},
       location: {query: {query: 'is:unresolved'}, search: 'query=is:unresolved'},
       params: {orgId: organization.slug, projectId: project.slug},
@@ -222,6 +223,7 @@ describe('Stream', function() {
   describe('fetchSavedSearches()', function() {
     it('handles valid search id', async function() {
       const streamProps = {
+        api: new MockApiClient(),
         setProjectNavSection: function() {},
         params: {orgId: 'org-slug', projectId: 'project-slug', searchId: '789'},
         location: {query: {}, search: ''},
@@ -237,6 +239,7 @@ describe('Stream', function() {
 
     it('handles invalid search id', async function() {
       const streamProps = {
+        api: new MockApiClient(),
         setProjectNavSection: function() {},
         params: {orgId: 'org-slug', projectId: 'project-slug', searchId: 'invalid'},
         location: {query: {}, search: ''},

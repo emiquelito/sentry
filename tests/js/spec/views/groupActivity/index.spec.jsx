@@ -25,6 +25,7 @@ describe('GroupActivity', function() {
   it('renders a NoteInput', function() {
     const wrapper = shallow(
       <GroupActivity
+        api={new MockApiClient()}
         group={{id: '1337', activity: []}}
         organization={TestStubs.Organization()}
       />,
@@ -46,6 +47,7 @@ describe('GroupActivity', function() {
     beforeEach(function() {
       instance = shallow(
         <GroupActivity
+          api={new MockApiClient()}
           group={{id: '1337', activity: []}}
           organization={TestStubs.Organization()}
         />,
@@ -62,7 +64,7 @@ describe('GroupActivity', function() {
 
     it('should do nothing if not present in GroupStore', function() {
       sandbox.stub(GroupStore, 'removeActivity').returns(-1); // not found
-      const request = sandbox.stub(instance.api, 'request');
+      const request = sandbox.stub(instance.props.api, 'request');
 
       instance.onNoteDelete({id: 1});
       expect(request.calledOnce).not.toBeTruthy();
@@ -71,7 +73,7 @@ describe('GroupActivity', function() {
     it('should remove remove the item from the GroupStore make a DELETE API request', function() {
       sandbox.stub(GroupStore, 'removeActivity').returns(1);
 
-      const request = sandbox.stub(instance.api, 'request');
+      const request = sandbox.stub(instance.props.api, 'request');
       instance.onNoteDelete({id: 1});
       expect(request.calledOnce).toBeTruthy();
       expect(request.getCall(0).args[0]).toEqual('/issues/1337/comments/1/');

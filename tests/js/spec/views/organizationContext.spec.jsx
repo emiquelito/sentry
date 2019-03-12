@@ -3,7 +3,7 @@ import React from 'react';
 import {mount} from 'enzyme';
 import {openSudo} from 'app/actionCreators/modal';
 import ConfigStore from 'app/stores/configStore';
-import OrganizationContext from 'app/views/organizationContext';
+import {OrganizationContext} from 'app/views/organizationContext';
 import ProjectsStore from 'app/stores/projectsStore';
 import TeamStore from 'app/stores/teamStore';
 import GlobalSelectionStore from 'app/stores/globalSelectionStore';
@@ -41,7 +41,11 @@ describe('OrganizationContext', function() {
     jest.spyOn(GlobalSelectionStore, 'loadInitialData');
 
     wrapper = mount(
-      <OrganizationContext params={{orgId: 'org-slug'}} location={{query: {}}}>
+      <OrganizationContext
+        api={new MockApiClient()}
+        params={{orgId: 'org-slug'}}
+        location={{query: {}}}
+      >
         {<div />}
       </OrganizationContext>
     );
@@ -103,7 +107,11 @@ describe('OrganizationContext', function() {
       statusCode: 403,
     });
     wrapper = mount(
-      <OrganizationContext params={{orgId: 'org-slug'}} location={{}}>
+      <OrganizationContext
+        api={new MockApiClient()}
+        params={{orgId: 'org-slug'}}
+        location={{}}
+      >
         {<div />}
       </OrganizationContext>
     );
@@ -123,7 +131,11 @@ describe('OrganizationContext', function() {
       statusCode: 403,
     });
     wrapper = mount(
-      <OrganizationContext params={{orgId: 'org-slug'}} location={{}}>
+      <OrganizationContext
+        api={new MockApiClient()}
+        params={{orgId: 'org-slug'}}
+        location={{}}
+      >
         {<div />}
       </OrganizationContext>
     );
