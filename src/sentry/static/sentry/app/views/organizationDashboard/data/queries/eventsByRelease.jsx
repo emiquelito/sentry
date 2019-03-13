@@ -9,7 +9,7 @@ const eventsByRelease = {
   constraints: ['top10Releases'],
   conditions: [],
   aggregations: [['count()', null, 'Events']],
-  limit: 1000,
+  limit: 5000,
 
   orderby: '-time',
   groupby: ['time', '__release'],
