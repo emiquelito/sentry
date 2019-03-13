@@ -1,0 +1,7 @@
+deployments:
+  default:
+    dockerimage: slafs/sentry
+    port_forwarding: 80:9000
+    environment:
+      - SENTRY_URL_PREFIX=https://$SQUASH_DOMAIN
+      - SECRET_KEY=randomvalue
