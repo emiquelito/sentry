@@ -95,12 +95,9 @@ class DiscoverQuery extends React.Component {
           this.getQuery(topReleases),
           organization
         ).fetchWithoutLimit();
-        const {
-          fields, //eslint-disable-line no-unused-vars
-          ...queryWithoutFields
-        } = query;
         const newQuery = {
-          ...queryWithoutFields,
+          ...query,
+          fields: [],
           condition_fields: createReleaseFieldCondition(
             releases.data.map(({release}) => release)
           ),
